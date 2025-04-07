@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy birthday cutie
+    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff7a7a, #ff3c89);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -15px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-800px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            perspective: 1500px;
+            width: 300px;
+            height: 400px;
+            transition: transform 0.5s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.8s ease;
+            cursor: pointer;
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-origin: left;
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.3),
+                0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10; /* Ensure cover is on top when closed */
+        }
+
+        .card:hover {
+            animation-play-state: paused;
+        }
+
+        .card:hover .cover {
+            transform: rotateY(-130deg) translateZ(10px);
+            box-shadow: 
+                10px 10px 30px rgba(0,0,0,0.2),
+                5px 5px 15px rgba(0,0,0,0.15),
+                inset 0 0 15px rgba(0,0,0,0.1);
+            z-index: 5; /* Lower z-index when open */
+        }
+
+        .cover-front, .cover-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 5px;
+        }
+
+        .cover-front {
+            background: #ffb7c5;
+            z-index: 2;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0' result='dust'/%3E%3CfeBlend in='SourceGraphic' in2='dust' mode='multiply'/%3E%3C/filter%3E%3Crect width='300' height='400' fill='%23ffb7c5' filter='url(%23paper)'/%3E%3C/svg%3E");
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.2),
+                0 0 1px rgba(0,0,0,0.2),
+                inset 0 0 15px rgba(255,255,255,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .cover-spine {
+            position: absolute;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to right, #ffb7c5, #ff96a8);
+            left: 0;
+            box-shadow: 
+                inset -2px 0 5px rgba(0,0,0,0.1),
+                inset 2px 0 5px rgba(0,0,0,0.1);
+            transform: translateX(-18px) rotateY(-90deg);
+            transform-origin: right;
+            border-radius: 3px 0 0 3px;
+            opacity: 0.9;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0' result='dust'/%3E%3CfeBlend in='SourceGraphic' in2='dust' mode='multiply'/%3E%3C/filter%3E%3Crect width='20' height='400' fill='%23ffb7c5' filter='url(%23paper)'/%3E%3C/svg%3E");
+        }
+
+        .cover-back {
+            background-color: #ffb7c5;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0' result='dust'/%3E%3CfeBlend in='SourceGraphic' in2='dust' mode='multiply'/%3E%3C/filter%3E%3Crect width='300' height='400' fill='%23ffb7c5' filter='url(%23paper)'/%3E%3C/svg%3E");
+            transform: rotateY(180deg);
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.2),
+                0 0 1px rgba(0,0,0,0.2),
+                inset 0 0 15px rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0' result='dust'/%3E%3CfeBlend in='SourceGraphic' in2='dust' mode='multiply'/%3E%3C/filter%3E%3Crect width='300' height='400' fill='%23fff9fb' filter='url(%23paper)'/%3E%3C/svg%3E");
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-shadow: 
+                -5px 5px 10px rgba(0,0,0,0.1),
+                inset 0 0 30px rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 1; /* Lower z-index than cover */
+        }
+
+        .page:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 5%);
+        }
+
+        .page-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1;
+            background-image: 
+                repeating-linear-gradient(transparent, transparent 24px, #6b778d 25px);
+        }
+
+        .page-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .front-title {
+            font-size: 24px;
+            color: #ff1493;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            color: #ff1493;
+            margin: 15px 0;
+            animation: pulse 1.5s infinite;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .front-message {
+            color: #ff1493;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .inside-title {
+            font-size: 28px;
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .inside-message {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        .signature {
+            font-size: 22px;
+            font-family: 'Brush Script MT', cursive;
+            color: #ff1493;
+            margin-top: 20px;
+        }
+
+        .ribbon {
+            position: absolute;
+            width: 30px;
+            height: 120px;
+            background: linear-gradient(to right, #ff5c8a, #ff91a4);
+            top: 140px;
+            right: -15px;
+            z-index: 3;
+            transform: rotate(5deg);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            opacity: 0.9;
+            border-radius: 2px;
+        }
+
+        .ribbon:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(to right, #ff91a4, #ff5c8a);
+            bottom: -15px;
+            left: 0;
+            transform: rotate(45deg);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            border-radius: 2px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .stitch {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .stitch-hole {
+            width: 4px;
+            height: 4px;
+            background: #ccc;
+            border-radius: 50%;
+            box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+        }
+
+        .card-shadow {
+            position: absolute;
+            width: 90%;
+            height: 20px;
+            background: rgba(0,0,0,0.2);
+            bottom: -25px;
+            left: 5%;
+            border-radius: 50%;
+            filter: blur(10px);
+            transition: all 0.5s ease;
+        }
+
+        .container:hover .card-shadow {
+            width: 95%;
+            filter: blur(15px);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-shadow"></div>
+            <div class="page">
+                <div class="stitch">
+                    <div class="stitch-hole"></div>
+                    <div class="stitch-hole"></div>
+                    <div class="stitch-hole"></div>
+                    <div class="stitch-hole"></div>
+                    <div class="stitch-hole"></div>
+                </div>
+                <div class="page-lines"></div>
+                <div class="page-content">
+                    <h2 class="inside-title">Enjoy your day
+                    </h2>
+                    <p class="inside-message">
+                        Hey Fatoma, I just want to wish you a very happy Birthday, i hope you have a great day and i wish for you to have a great future ahead.
+                    </p>
+                    <p class="inside-message">
+                        Know that I love you and I always will, darling. <br/>
+                        Your love, Aditya.
+                    </p>
+                    <p class="signature">Happy Birthday!</p>
+                </div>
+            </div>
+            <div class="cover">
+                <div class="cover-spine"></div>
+                <div class="cover-front">
+                    <h2 class="front-title">Happy Birthday Fatom</h2>
+                    <div class="heart-icon">🎂</div>
+                    <p class="front-message">hehe</p>
+                </div>
+                <div class="cover-back"></div>
+            </div>
+            <div class="ribbon"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts in the background
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.getElementById('hearts');
+            const numberOfHearts = 20;
+            
+            for (let i = 0; i < numberOfHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Random positioning
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                
+                // Random size
+                const size = Math.random() * 20 + 10;
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                
+                // Random animation delay
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Random colors
+                const colors = ['#ff91a4', '#ff5c8a', '#ff3c7d', '#ffffff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.backgroundColor = color;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Make sure pseudo-elements have the same color
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    .heart:nth-child(${i+1}):before, .heart:nth-child(${i+1}):after {
+                        background-color: ${color};
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        });
+    </script>
+</body>
+</html>
